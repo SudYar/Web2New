@@ -18,7 +18,7 @@ public class AreaCheckServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String xString = request.getParameter("x-value");
         String yString = request.getParameter("y");
         String rString = request.getParameter("r-value");

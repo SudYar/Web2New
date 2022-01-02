@@ -19,6 +19,7 @@ $("input[name='r-value']").change(function (){
 document.getElementById("reset_button").onclick = function (){
     clear();
     drawGrid(cont, weight/2, height/2);
+    drawDots();
 };
 
 function getR(){
@@ -155,7 +156,7 @@ function drawDots(){
 
 function drawOneDot(dot){
     let dotX = dot.x * unit + weight/2;
-    let dotY = dot.y * unit + height/2;
+    let dotY = height/2 - dot.y * unit;
 
     cont.fillStyle = "red";
     cont.beginPath();
