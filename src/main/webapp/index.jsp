@@ -95,7 +95,7 @@
                 </p>
                 <p>Введите Y:   <input type="text" id="y-text" name="y" autocomplete="false" required placeholder="(-3; 5)" size="2px" min="-3" max="5" maxlength="10"></p>
                 <p>Выберите R </p>
-                <p> <span style="color: red; visibility: hidden" id="r-error">Сначала надо выбрать R</span></p>
+<%--                <p style="color: red; visibility: hidden" id="r-error">Сначала надо выбрать R</p>--%>
                 <p>
                     <input type="radio" name="r-value" id="r1" value="1">
                     <label for="r1">1</label>

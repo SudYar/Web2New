@@ -80,9 +80,11 @@ function setCoordinates(x, y) {
     if (getR() !== 0){
         setX(x);
         setY(y);
+        return true;
     } else {
-
-        $('#r-error').css({"visibility":"visible"});
+        alert("Сначала выберите нужный вам R")
+        // $('#r-error').css({"visibility":"visible"});
+        return false;
     }
 }
 
@@ -103,25 +105,26 @@ function convertYtoUnits(y1){
 
 graph.addEventListener('click', function(evt) {
     var mousePos = getMousePos(graph, evt);
-    setCoordinates(mousePos.x, mousePos.y);
-    var newURL = location.href.split("?")[0];
-    window.history.pushState('object', document.title, newURL);
-    evt.preventDefault();
-    if ($("#request-coordinates").valid()){
-        var formData = $('#request-coordinates').serialize();
-        console.log(formData);
-        $.ajax({
-            url: "controller",
-            type: "POST",
-            data: formData,
-            beforeSend: function () {
+    if (setCoordinates(mousePos.x, mousePos.y)) {
+        var newURL = location.href.split("?")[0];
+        window.history.pushState('object', document.title, newURL);
+        evt.preventDefault();
+        if ($("#request-coordinates").valid()) {
+            var formData = $('#request-coordinates').serialize();
+            console.log(formData);
+            $.ajax({
+                url: "controller",
+                type: "POST",
+                data: formData,
+                beforeSend: function () {
 
-            },
-            success: function (data) {
-                document.innerHTML = data; //устанавливаю принятый html
-                location.reload();
-            }
-        });
+                },
+                success: function (data) {
+                    document.innerHTML = data; //устанавливаю принятый html
+                    location.reload();
+                }
+            });
+        }
     }
 }, false);
 
