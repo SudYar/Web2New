@@ -57,6 +57,25 @@ function setY(y){
     document.getElementById("y-text").value = y.toFixed(4);
 }
 
+function setR(r) {
+    let arrayOfR = [1, 1.5, 2, 2.5, 3];
+    let res;
+    if (r < 1){
+        res = arrayOfR[0];
+    }else if (r > 3){
+        res = arrayOfR[4];
+    }else {
+        res = arrayOfR[0];
+        for (const i of arrayOfR) {
+            if (Math.abs(i-r)<=Math.abs(res-r)){
+                res = i;
+            }
+        }
+    }
+    let rId = 'r' + res;
+    document.getElementById(rId).click();
+}
+
 function setCoordinates(x, y) {
     if (getR() !== 0){
         setX(x);
@@ -85,7 +104,27 @@ function convertYtoUnits(y1){
 graph.addEventListener('click', function(evt) {
     var mousePos = getMousePos(graph, evt);
     setCoordinates(mousePos.x, mousePos.y);
+    var newURL = location.href.split("?")[0];
+    window.history.pushState('object', document.title, newURL);
+    evt.preventDefault();
+    if ($("#request-coordinates").valid()){
+        var formData = $('#request-coordinates').serialize();
+        console.log(formData);
+        $.ajax({
+            url: "controller",
+            type: "POST",
+            data: formData,
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                document.innerHTML = data; //устанавливаю принятый html
+                location.reload();
+            }
+        });
+    }
 }, false);
+
 
 
 

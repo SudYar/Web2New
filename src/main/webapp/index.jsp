@@ -27,7 +27,7 @@
 <div class="clear"></div>
 <div id="content">
     <div id="left">
-        <input type="button" id="clear-table" value="Очистить таблицу" onclick="clearAll()">
+        <input class="button button3" type="button" id="clear-table" value="Очистить таблицу" onclick="clearAll()">
         <table id="answer-table">
             <tr>
                 <td>X</td><td>Y</td> <td>R</td><td>Результат</td>
@@ -49,9 +49,9 @@
                     myResults = allResults.get(currentId);
                     if(myResults.size()>0){
                         SerializeXYR lastInputs = myResults.get(myResults.size()-1);
-                        pageContext.setAttribute("x-value", lastInputs.getX());
+                        pageContext.setAttribute("x", lastInputs.getX());
                         pageContext.setAttribute("y", lastInputs.getY());
-                        pageContext.setAttribute("r-value", lastInputs.getR());
+                        pageContext.setAttribute("r", lastInputs.getR());
                     }
                 } else {
                     myResults = new ArrayList<>();
@@ -108,7 +108,7 @@
                     <input type="radio" name="r-value" id="r3" value="3">
                     <label for="r3">3</label>
                 </p>
-                <p><input type="submit" name="submit" > <input id="reset_button" type="reset" name="reset"></p>
+                <p><input class="button button1" type="submit" name="submit" > <input class="button button2" id="reset_button" type="reset" name="reset"></p>
             </form>
         </div>
     </div>
@@ -129,9 +129,10 @@
     if(myResults!=null && myResults.size()>0)  {
 %>
 <script>
+    console.log(${x}, ${y}, ${r});
     setX(${x});
     setY(${y});
-    $("#r-value").val(${r});
+    setR(${r});
 </script>
 <%
     }
