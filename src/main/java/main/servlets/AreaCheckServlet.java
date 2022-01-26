@@ -25,28 +25,13 @@ public class AreaCheckServlet extends HttpServlet {
         double x;
         double y;
         double r;
-        String cookieName = "sessionId";
         try{
             x = Double.parseDouble(xString);
             y = Double.parseDouble(yString);
             r = Double.parseDouble(rString);
             boolean isPointInArea = checkArea(x, y, r);
             SerializeXYR storage = new SerializeXYR(x, y, r, isPointInArea);
-            Cookie[] cookies = request.getCookies();
-            boolean cookieExists = false;
-            for (Cookie cookie : cookies){
-                if (cookie.getName().equals(cookieName)){
-                    addCookieToContext(cookie, storage);
-                    cookieExists = true;
-                    break;
-                }
-            }
-            if (!cookieExists){
-                Cookie cookie = new Cookie(cookieName, UUID.randomUUID().toString());
-                cookie.setMaxAge(60*60*24);
-                response.addCookie(cookie);
-                addCookieToContext(cookie, storage);
-            }
+            addCookieToContext(storage);
 
         } catch (NumberFormatException e){
             
@@ -55,16 +40,9 @@ public class AreaCheckServlet extends HttpServlet {
         }
     }
 
-    private void addCookieToContext(Cookie cookie, SerializeXYR storage){
-        String sessionId = cookie.getValue();
-        HashMap<String, ArrayList<SerializeXYR>> resStorages = (HashMap<String, ArrayList<SerializeXYR>>) getServletContext().getAttribute("results");
-        if (resStorages.containsKey(sessionId)){
-            resStorages.get(sessionId).add(storage);
-        } else {
-            ArrayList<SerializeXYR> libraryOfStorages = new ArrayList<>();
-            libraryOfStorages.add(storage);
-            resStorages.put(sessionId, libraryOfStorages);
-        }
+    private void addCookieToContext(SerializeXYR storage){
+        ArrayList<SerializeXYR> resStorages = (ArrayList<SerializeXYR>) getServletContext().getAttribute("results");
+        resStorages.add(storage);
     }
 
     private boolean checkArea(double x, double y, double r){
@@ -125,7 +103,7 @@ public class AreaCheckServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        HashMap<String, ArrayList<SerializeXYR>> results = new HashMap<>();
+        ArrayList<SerializeXYR> results = new ArrayList<SerializeXYR>() ;
         if (getServletContext().getAttribute("results")==null){
             getServletContext().setAttribute("results", results);
         }

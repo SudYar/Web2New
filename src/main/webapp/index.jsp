@@ -33,30 +33,19 @@
                 <td>X</td><td>Y</td> <td>R</td><td>Результат</td>
             </tr>
             <%
-                ArrayList<SerializeXYR> myResults;
-                String currentId = "";
 
-                Cookie[] cookies = request.getCookies();
-                if (cookies!=null){
-                    for (Cookie cookie : cookies){
-                        if (cookie.getName().equals("sessionId")){
-                            currentId = cookie.getValue();
-                        }
-                    }
-                }
-                HashMap<String, ArrayList<SerializeXYR>> allResults = (HashMap<String, ArrayList<SerializeXYR>>) request.getServletContext().getAttribute("results");
-                if (allResults!=null && allResults.get(currentId)!=null){
-                    myResults = allResults.get(currentId);
-                    if(myResults.size()>0){
-                        SerializeXYR lastInputs = myResults.get(myResults.size()-1);
+                ArrayList<SerializeXYR> allResults = (ArrayList<SerializeXYR>) request.getServletContext().getAttribute("results");
+                if (allResults!=null ){
+                    if(allResults.size()>0){
+                        SerializeXYR lastInputs = allResults.get(allResults.size()-1);
                         pageContext.setAttribute("x", lastInputs.getX());
                         pageContext.setAttribute("y", lastInputs.getY());
                         pageContext.setAttribute("r", lastInputs.getR());
                     }
                 } else {
-                    myResults = new ArrayList<>();
+                    allResults = new ArrayList<>();
                 }
-                pageContext.setAttribute("myResults", myResults);
+                pageContext.setAttribute("myResults", allResults);
             %>
             <c:forEach items="${myResults}" var="result">
                 <tr>
@@ -126,7 +115,7 @@
     </c:forEach>
 </script>
 <%
-    if(myResults!=null && myResults.size()>0)  {
+    if(allResults!=null && allResults.size()>0)  {
 %>
 <script>
     console.log(${x}, ${y}, ${r});
