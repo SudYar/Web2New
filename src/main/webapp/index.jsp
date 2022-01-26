@@ -21,7 +21,7 @@
 
 </head>
 <body class="page">
-<div id="header"><a href="https://github.com/SudYar/Web2" target="_blank">Ссылка на git</a>
+<div id="header"><a href="https://github.com/SudYar/Web2New" target="_blank">Ссылка на git</a>
     <span>Сударушкин Ярослав P3214<br/>
         Вариант 25450</span><br/></div>
 <div class="clear"></div>
