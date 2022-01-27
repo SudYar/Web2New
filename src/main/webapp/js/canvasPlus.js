@@ -110,7 +110,7 @@ graph.addEventListener('click', function(evt) {
         window.history.pushState('object', document.title, newURL);
         evt.preventDefault();
         if ($("#request-coordinates").valid()) {
-            var formData = $('#request-coordinates').serialize();
+            var formData = "x-value=" + mousePos.x.toFixed(3) + "&y=" + mousePos.y.toFixed(3) + "&r-value=" + getR();
             console.log(formData);
             $.ajax({
                 url: "controller",

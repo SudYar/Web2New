@@ -47,9 +47,9 @@ public class AreaCheckServlet extends HttpServlet {
 
     private boolean checkArea(double x, double y, double r){
         boolean inArea = false;
-        if (validateXYR(x, y, r)){
+//        if (validateXYR(x, y, r)){
             inArea = checkAreaWithValidXYR(x, y, r);
-        }
+//        }
         return inArea;
     }
 
