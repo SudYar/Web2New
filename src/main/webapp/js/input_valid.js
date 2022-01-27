@@ -21,7 +21,6 @@ $("#request-coordinates").submit(function( event ) {
     window.history.pushState('object', document.title, newURL);
     event.preventDefault();
     if ($("#request-coordinates").valid()){
-        getServletContext().setAttribute("results", results);
         var formData = $('#request-coordinates').serialize();
         console.log(formData);
         $.ajax({
